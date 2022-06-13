@@ -5,4 +5,5 @@ class Settings:
         """初始化屏幕设置"""
         # 屏幕设置
         self.screen_width_and_height = (1200, 800)
+        self.screen_caption = "Alien Invasion"
         self.bg_color = (230, 230, 230)

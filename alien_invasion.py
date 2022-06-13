@@ -11,7 +11,7 @@ class AlienInvasion:
         pygame.init()
         self.Settings = Settings()
         self.screen = pygame.display.set_mode(self.Settings.screen_width_and_height)
-        pygame.display.set_caption("Alien Invasion")
+        pygame.display.set_caption(self.Settings.screen_caption)
 
         self.bg_color = self.Settings.bg_color
 
