@@ -8,3 +8,4 @@ class Settings:
         self.screen_caption = "Alien Invasion"
         self.bg_color = (230, 230, 230)
         self.ship_image_path = "images/ship.bmp"
+        self.ship_speed = 1
