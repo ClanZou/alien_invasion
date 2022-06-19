@@ -79,7 +79,7 @@ class AlienInvasion:
         """
         # 删除消失的子弹
         for bullet in self.bullets.copy():
-            if bullet.bullet_rect.bottom <= 0:
+            if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
     def _create_fleet(self):
@@ -95,7 +95,6 @@ class AlienInvasion:
 
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
-
         self.aliens.draw(self.screen)
 
         pygame.display.flip()
