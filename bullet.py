@@ -14,6 +14,12 @@ class Bullet(Sprite):
 
         # 在(0,0)出创建一个表示子弹的矩形，再设置正确的位置
         self.bullet_rect = pygame.Rect(self.settings.bullet_width_and_height)
+
+        """
+        self.midtop一旦赋值
+        其它self.midright、self.midleft、self.midbootm的值也会同时改变
+        只能推测pygame.Rect内部设定了相关运算
+        """
         self.bullet_rect.midtop = main_game.ship.image_rect.midtop
 
     def update(self):
