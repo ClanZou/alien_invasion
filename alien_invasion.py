@@ -20,8 +20,7 @@ class AlienInvasion:
         """
         sprite内置了update方法，所以在run_game可以直接调用
         如果不使用sprite.Group()，也可以自创一个[]空列表
-        然后不能在run_game中调用update，要在_update_screen的for读取bullet时调用update
-        因为使用的是自创的列表保存bullet，所以bullet飞出屏幕后不会有后置处理会占用内存
+        然后不能在self.bullets.update，要在_update_screen的for读取bullet时调用update
         """
         self.bullets = pygame.sprite.Group()
 
@@ -78,7 +77,6 @@ class AlienInvasion:
         for bullet in self.bullets.copy():
             if bullet.bullet_rect.bottom <= 0:
                 self.bullets.remove(bullet)
-        print(len(self.bullets))
 
     def _update_screen(self):
         """更新屏幕上的图像，并切换到新屏幕"""
