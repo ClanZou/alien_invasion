@@ -84,8 +84,30 @@ class AlienInvasion:
 
     def _create_fleet(self):
         """创建外星人群"""
-        # 创建一个外星人
+        # 创建第一行外星人
         alien = Alien(self)
+        alien_width = alien.rect.width
+        alien_height = alien.rect.height
+
+        # 留余左右各一个空位
+        available_space_x = self.settings.screen_width_and_height[0] - 2 * alien_width
+        number_aliens_x = available_space_x // (2 * alien_width)
+
+        # 留余上下个一个空位，并额外在ship前留余一个空位，排除ship所在行被计算进去
+        available_space_y = self.settings.screen_width_and_height[1] - 3 * alien_height - self.ship.rect.height
+        # 这里结果为4.9，所以只有4行
+        number_rows = available_space_y // (2 * alien_height)
+
+        # 创建外星人群
+        for row_number in range(number_rows):
+            for alien_number in range(number_aliens_x):
+                self._create_alien(alien_number, row_number)
+
+    def _create_alien(self, alien_number, row_number):
+        """创建一个外星人并将其放在当前行"""
+        alien = Alien(self)
+        alien.rect.x = alien.rect.width + 2 * alien.rect.width * alien_number
+        alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         self.aliens.add(alien)
 
     def _update_screen(self):
