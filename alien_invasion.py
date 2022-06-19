@@ -94,7 +94,7 @@ class AlienInvasion:
         self.ship.blitme()
 
         for bullet in self.bullets.sprites():
-            bullet.draw_bullet()
+            pygame.draw.rect(self.screen, self.settings.bullet_color, bullet.rect)
         self.aliens.draw(self.screen)
 
         pygame.display.flip()
