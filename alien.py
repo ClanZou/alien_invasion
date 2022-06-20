@@ -10,6 +10,7 @@ class Alien(Sprite):
         super().__init__()
         self.screen = main_game.screen
         self.settings = main_game.settings
+        self.fleet_direction = self.settings.fleet_direction
 
         # 加载外星人图像并设置其rect属性
         self.image = pygame.image.load(self.settings.alien_image_path)
@@ -21,7 +22,7 @@ class Alien(Sprite):
 
     def update(self):
         """向右移动外星人"""
-        self.rect.x += self.settings.alien_speed * self.settings.fleet_direction
+        self.rect.x += self.settings.alien_speed * self.fleet_direction
 
     def check_edges(self):
         """如果外星人位于屏幕边缘，就返回True"""

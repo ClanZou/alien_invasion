@@ -150,14 +150,15 @@ class AlienInvasion:
         """有外星人到达边缘时采取相应的措施"""
         for alien in self.aliens.sprites():
             if alien.check_edges():
-                self._change_fleet_direction()
-                break
-
-    def _change_fleet_direction(self):
-        """将整群外星人下移，并改变它们的方向"""
-        for alien in self.aliens.sprites():
-            alien.rect.y += self.settings.fleet_drop_speed
-        self.settings.fleet_direction *= -1
+                alien.rect.y += self.settings.fleet_drop_speed
+                """
+                这里只能用alien.fleet_direct也就是Alien内部的属性
+                不能用self.settings.fleet_direct通用参数
+                因为在Alien类与Settings两个类互相引用得到的值是独立的
+                也就是在主程序这里修改settings.fleet_direction
+                在alien.fleet_direction是独立的，不会受修改影响的
+                """
+                alien.fleet_direction *= -1
 
     def _update_screen(self):
         """更新屏幕上的图像，并切换到新屏幕"""
