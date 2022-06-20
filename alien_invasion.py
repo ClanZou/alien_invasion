@@ -4,6 +4,7 @@ from settings import Settings
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
+import random
 
 
 class AlienInvasion:
@@ -129,8 +130,18 @@ class AlienInvasion:
         number_rows = available_space_y // (2 * alien_height)
 
         # 创建外星人群
-        for row_number in range(number_rows):
-            for alien_number in range(number_aliens_x):
+        random_row = list(range(number_rows))
+        random_list = list(range(number_aliens_x))
+        random.shuffle(random_row)
+        random.shuffle(random_list)
+        # random_row = random_row[:len(random_row) // 2]
+        # random_list = random_list[:len(random_list) // 2]
+        random_flag = 0
+        for row_number in random_row:
+            for alien_number in random_list:
+                random_flag += 1
+                if (random_flag % 2) == 0:
+                    continue
                 self._create_alien(alien_number, row_number)
 
     def _create_alien(self, alien_number, row_number):
