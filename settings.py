@@ -10,6 +10,7 @@ class Settings:
 
         self.ship_image_path = "images/ship.bmp"
         self.ship_speed = 1
+        self.ship_limit = 3
 
         self.bullet_speed = 1
         self.bullet_width_and_height = (0, 0, 3, 15)
