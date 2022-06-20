@@ -36,6 +36,7 @@ class AlienInvasion:
             self.ship.update()
             self._fire_bullet()
             self._update_bullets()
+            self._update_aliens()
             self._update_screen()
 
     def _check_events(self):
@@ -139,6 +140,10 @@ class AlienInvasion:
         alien.rect.x = alien.rect.width + 2 * alien.rect.width * alien_number
         alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         self.aliens.add(alien)
+
+    def _update_aliens(self):
+        """更新外星人群中所有外星人的位置"""
+        self.aliens.update()
 
     def _update_screen(self):
         """更新屏幕上的图像，并切换到新屏幕"""

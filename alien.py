@@ -18,3 +18,7 @@ class Alien(Sprite):
         # 每个外星人最初都在屏幕左上角附近
         self.rect.x = self.rect.width
         self.rect.y = self.rect.height
+
+    def update(self):
+        """向右移动外星人"""
+        self.rect.x += self.settings.alien_speed

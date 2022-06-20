@@ -16,3 +16,4 @@ class Settings:
         self.bullet_color = (60, 60, 60)
 
         self.alien_image_path = "images/alien.bmp"
+        self.alien_speed = 1
