@@ -37,10 +37,11 @@ class AlienInvasion:
         """开始游戏的主循环"""
         while True:
             self._check_events()
-            self.ship.update()
-            self._fire_bullet()
-            self._update_bullets()
-            self._update_aliens()
+            if self.game_stats.game_active:
+                self.ship.update()
+                self._fire_bullet()
+                self._update_bullets()
+                self._update_aliens()
             self._update_screen()
 
     def _check_events(self):
@@ -197,19 +198,22 @@ class AlienInvasion:
     def _ship_hit(self):
         """响应飞船被外星人撞到"""
 
-        # 将ships_left减1
-        self.game_stats.ship_life -= 1
+        if self.game_stats.ship_life > 0:
+            # 将ships_left减1
+            self.game_stats.ship_life -= 1
 
-        # 清空余下的外星人和子弹
-        self.aliens.empty()
-        self.bullets.empty()
+            # 清空余下的外星人和子弹
+            self.aliens.empty()
+            self.bullets.empty()
 
-        # 创建一群新的外星人，并将飞船放到屏幕底端的中央
-        self._create_fleet()
-        self.ship.center_ship()
+            # 创建一群新的外星人，并将飞船放到屏幕底端的中央
+            self._create_fleet()
+            self.ship.center_ship()
 
-        # 暂停
-        sleep(0.5)
+            # 暂停
+            sleep(0.5)
+        else:
+            self.game_stats.game_active = False
 
     def _update_screen(self):
         """更新屏幕上的图像，并切换到新屏幕"""
