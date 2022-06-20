@@ -17,3 +17,6 @@ class Settings:
 
         self.alien_image_path = "images/alien.bmp"
         self.alien_speed = 1
+        self.fleet_drop_speed = 5
+        # fleet_direction为1表示向右移，为-1表示向左移
+        self.fleet_direction = 1
