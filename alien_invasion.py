@@ -112,11 +112,21 @@ class AlienInvasion:
                 self.bullet.shooting_timing = True
             else:
                 self.bullet.shooting_timing = False
+
+        self._check_bullet_alien_collisions()
+
+    def _check_bullet_alien_collisions(self):
         """
         当有子弹和外星人的rect重叠，groupcollide() 在它返回的字典中添加一个键值对
         两个实参True让Pygame删除发生碰撞的子弹和外星人
         """
+
+        # 删除发生碰撞的子弹和外星人
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+
+        # 创造一群新外星人
+        if not self.aliens:
+            self._create_fleet()
 
     def _create_fleet(self):
         """创建外星人群"""
