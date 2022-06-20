@@ -24,6 +24,9 @@ class Bullet(Sprite):
         """
         self.rect.midtop = main_game.ship.rect.midtop
 
+        self.shooting_flag = False
+        self.shooting_timing = False
+
     def update(self):
         """向上移动子弹"""
         # 更新表示子弹的rect的位置

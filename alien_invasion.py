@@ -4,6 +4,7 @@ from settings import Settings
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
+import time
 
 
 class AlienInvasion:
@@ -24,6 +25,7 @@ class AlienInvasion:
         然后不能在self.bullets.update，要在_update_screen的for读取bullet时调用update
         """
         self.bullets = pygame.sprite.Group()
+        self.bullet = Bullet(self)
 
         self.aliens = pygame.sprite.Group()
         self._create_fleet()
@@ -33,6 +35,7 @@ class AlienInvasion:
         while True:
             self._check_events()
             self.ship.update()
+            self._fire_bullet()
             self._update_bullets()
             self._update_screen()
 
@@ -55,22 +58,41 @@ class AlienInvasion:
         elif event.key == pygame.K_q:
             sys.exit()
         elif event.key == pygame.K_SPACE:
-            self._fire_bullet()
+            self.bullet.shooting_flag = True
+            self.bullet.shooting_timing = True
 
     def _check_keyup_events(self, event):
         if event.key == pygame.K_RIGHT:
             self.ship.moving_right = False
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
+        elif event.key == pygame.K_SPACE:
+            self.bullet.shooting_flag = False
+            self.bullet.shooting_timing = False
 
     def _fire_bullet(self):
         """创建一颗子弹，并将其加入编组bullets中"""
-        new_bullet = Bullet(self)
-        self.bullets.add(new_bullet)
+        if self.bullet.shooting_flag:
+            """
+            当shooting_timing为False时，什么都不做并退出方法
+            在按下space键时会为True，所以可以发射第一个bullet
+            之后当符合update_bullet循环中的判断条件时，才能发射第二个bullet
+            直到松开space，重新开始while主循环
+            """
+            if not self.bullet.shooting_timing:
+                return
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
 
     def _update_bullets(self):
         """更新子弹的位置并删除子弹"""
         # 更新子弹位置
+        """
+        可以在update()中设置shooting_timing默认为False
+        但是因为只能用一个实例bullet而不是bullets来判断是否连续发射子弹
+        所以如果在update()中设置了，那在这里还需要执行一次self.bullet.update()
+        也可以在主程序创建一个新变量而不使用Bullet类中的属性，但这样不符合面向对象原则
+        """
         self.bullets.update()
 
         """
@@ -81,6 +103,15 @@ class AlienInvasion:
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
+            """
+            使用一个实例bullet，通过设置它的shooting_timing判断是否连续发射子弹
+            当bullet的y轴超过8个bullet高度，设置shooting_timing为True
+            其它情况都为False
+            """
+            if bullet.rect.y == self.ship.rect.y - 8 * bullet.rect.height:
+                self.bullet.shooting_timing = True
+            else:
+                self.bullet.shooting_timing = False
 
     def _create_fleet(self):
         """创建外星人群"""
