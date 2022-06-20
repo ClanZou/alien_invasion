@@ -220,6 +220,7 @@ class AlienInvasion:
             sleep(0.5)
         else:
             self.game_stats.game_active = False
+            pygame.mouse.set_visible(True)
 
     def _check_play_button(self, mouse_pos):
         """在玩家单击play按钮时开始新游戏"""
@@ -236,6 +237,7 @@ class AlienInvasion:
             # 创建一群新的外星人并让飞船居中
             self._create_fleet()
             self.ship.center_ship()
+            pygame.mouse.set_visible(False)
 
     def _update_screen(self):
         """更新屏幕上的图像，并切换到新屏幕"""
