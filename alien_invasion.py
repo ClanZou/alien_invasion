@@ -154,9 +154,12 @@ class AlienInvasion:
                 """
                 这里只能用alien.fleet_direct也就是Alien内部的属性
                 不能用self.settings.fleet_direct通用参数
-                因为在Alien类与Settings两个类互相引用得到的值是独立的
-                也就是在主程序这里修改settings.fleet_direction
-                在alien.fleet_direction是独立的，不会受修改影响的
+                因为在主程序修改settings.fleet_direction所有调用都会生效
+                但是，有些实例会没有触发check_edges就被修改fleet
+                然后永远也不会碰到屏幕边缘，不会触发check_edges
+                
+                还有一处很奇怪的问题，屏幕高度为800时，前三行外星人会再屏幕边缘下滑然后移出屏幕
+                但是将屏幕高度改为800以上，就会按第一段那样两侧外星人下移，中间不会下移
                 """
                 alien.fleet_direction *= -1
 
