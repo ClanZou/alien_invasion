@@ -121,7 +121,7 @@ class AlienInvasion:
             当bullet的y轴超过8个bullet高度，设置shooting_timing为True
             其它情况都为False
             """
-            if bullet.rect.y == self.ship.rect.y - 8 * bullet.rect.height:
+            if bullet.rect.y <= self.ship.rect.y - 8 * bullet.rect.height:
                 self.bullet.shooting_timing = True
             else:
                 self.bullet.shooting_timing = False
