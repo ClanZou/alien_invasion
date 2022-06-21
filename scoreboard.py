@@ -19,7 +19,8 @@ class ScoreBoard:
 
     def prep_score(self):
         """将得分转换为一副渲染的图像"""
-        score_str = str(self.game_stats.score)
+        rounded_score = round(self.game_stats.score, -1)
+        score_str = "{:,}".format(rounded_score)
         self.score_image = self.font.render(score_str, True, self.text_color, self.settings.bg_color)
 
         # 在屏幕右上角显示得分
