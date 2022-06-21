@@ -7,6 +7,7 @@ from alien import Alien
 from game_stats import GameStats
 from time import sleep
 from button import Button
+from scoreboard import ScoreBoard
 
 
 class AlienInvasion:
@@ -20,6 +21,7 @@ class AlienInvasion:
         pygame.display.set_caption(self.settings.screen_caption)
 
         self.game_stats = GameStats(self)
+        self.scoreboard = ScoreBoard(self)
 
         self.ship = Ship(self)
 
@@ -137,6 +139,10 @@ class AlienInvasion:
         # 删除发生碰撞的子弹和外星人
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
 
+        if collisions:
+            self.game_stats.score += self.settings.alien_points
+            self.scoreboard.prep_score()
+
         # 创造一群新外星人
         if not self.aliens:
             self._create_fleet()
@@ -234,6 +240,7 @@ class AlienInvasion:
             # 重置游戏统计信息
             self.game_stats.reset_stats()
             self.settings.initialize_dynamic_settings()
+            self.scoreboard.prep_score()
 
             # 清空余下的外星人和子弹
             self.aliens.empty()
@@ -252,7 +259,7 @@ class AlienInvasion:
         for bullet in self.bullets.sprites():
             pygame.draw.rect(self.screen, self.settings.bullet_color, bullet.rect)
         self.aliens.draw(self.screen)
-
+        self.scoreboard.show_score()
         if not self.game_stats.game_active:
             self.play_button.draw_button()
 
