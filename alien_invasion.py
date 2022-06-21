@@ -139,8 +139,15 @@ class AlienInvasion:
         # 删除发生碰撞的子弹和外星人
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
 
+        """
+        collisions会返回一个dict
+        如果一个bullet同时碰撞到了多个alien
+        例如，有两颗子弹击中了外星人，或因子弹较宽而同时击中了多个外星人
+        那字典里就会有多个键值对
+        """
         if collisions:
-            self.game_stats.score += self.settings.alien_points
+            for aliens in collisions.values():
+                self.game_stats.score += self.settings.alien_points * len(aliens)
             self.scoreboard.prep_score()
 
         # 创造一群新外星人
