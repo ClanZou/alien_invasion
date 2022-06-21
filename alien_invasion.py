@@ -248,6 +248,7 @@ class AlienInvasion:
             self.game_stats.reset_stats()
             self.settings.initialize_dynamic_settings()
             self.scoreboard.prep_score()
+            self.play_button.prep_msg("You Lose")
 
             # 清空余下的外星人和子弹
             self.aliens.empty()
@@ -261,13 +262,14 @@ class AlienInvasion:
     def _update_screen(self):
         """更新屏幕上的图像，并切换到新屏幕"""
         self.screen.fill(self.settings.bg_color)
-        self.ship.blitme()
 
-        for bullet in self.bullets.sprites():
-            pygame.draw.rect(self.screen, self.settings.bullet_color, bullet.rect)
-        self.aliens.draw(self.screen)
-        self.scoreboard.show_score()
-        if not self.game_stats.game_active:
+        if self.game_stats.game_active:
+            self.ship.blitme()
+            for bullet in self.bullets.sprites():
+                pygame.draw.rect(self.screen, self.settings.bullet_color, bullet.rect)
+            self.aliens.draw(self.screen)
+            self.scoreboard.show_score()
+        else:
             self.play_button.draw_button()
 
         pygame.display.flip()
