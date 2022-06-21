@@ -140,6 +140,7 @@ class AlienInvasion:
         # 创造一群新外星人
         if not self.aliens:
             self._create_fleet()
+            self.settings.increase_speed()
 
     def _create_fleet(self):
         """创建外星人群"""
@@ -165,7 +166,9 @@ class AlienInvasion:
     def _create_alien(self, alien_number, row_number):
         """创建一个外星人并将其放在当前行"""
         alien = Alien(self)
-        alien.rect.x = alien.rect.width + 2 * alien.rect.width * alien_number
+        """这里必须要先赋值给alien.x，因为alien.update()中alien.x+=是浮点运算结果一定为浮点值"""
+        alien.x = alien.rect.width + 2 * alien.rect.width * alien_number
+        alien.rect.x = alien.x
         alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         self.aliens.add(alien)
 

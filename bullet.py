@@ -27,7 +27,10 @@ class Bullet(Sprite):
         self.shooting_flag = False
         self.shooting_timing = False
 
+        self.y = float(self.rect.y)
+
     def update(self):
         """向上移动子弹"""
         # 更新表示子弹的rect的位置
-        self.rect.y -= self.settings.bullet_speed
+        self.y -= self.settings.bullet_speed
+        self.rect.y = self.y
