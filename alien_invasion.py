@@ -233,7 +233,7 @@ class AlienInvasion:
         if button_clicked and not self.game_stats.game_active:
             # 重置游戏统计信息
             self.game_stats.reset_stats()
-            self.game_stats.game_active = True
+            self.settings.initialize_dynamic_settings()
 
             # 清空余下的外星人和子弹
             self.aliens.empty()
