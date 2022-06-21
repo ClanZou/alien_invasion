@@ -71,6 +71,8 @@ class AlienInvasion:
         elif event.key == pygame.K_SPACE:
             self.bullet.shooting_flag = True
             self.bullet.shooting_timing = True
+        elif event.key == pygame.K_p:
+            self._check_play_button((self.play_button.rect.x, self.play_button.rect.y))
 
     def _check_keyup_events(self, event):
         if event.key == pygame.K_RIGHT:
